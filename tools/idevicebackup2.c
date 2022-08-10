@@ -2287,6 +2287,10 @@ checkpoint:
 				if (mberr == MOBILEBACKUP2_E_RECEIVE_TIMEOUT) {
 					PRINT_VERBOSE(2, "Device is not ready yet, retrying...\n");
 					goto files_out;
+				} else if (mberr == MOBILEBACKUP2_E_UNKNOWN_ERROR) {
+				        printf("Received weird error. Ignoring and proceeding with other files.\n");
+					/* Setting dlmsg to the empty string will result in no action. */
+					dlmsg = strdup("");
 				} else if (mberr != MOBILEBACKUP2_E_SUCCESS) {
 					PRINT_VERBOSE(0, "ERROR: Could not receive from mobilebackup2 (%d)\n", mberr);
 					quit_flag++;
